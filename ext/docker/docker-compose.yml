@@ -1,0 +1,57 @@
+---
+version: '2'
+
+services:
+
+  # 受注DB
+  kinesis-commerce-system-sample-order-db:
+    image: kinesis-commerce-system-sample-order-db:v0.0.1
+    container_name: kinesis-commerce-system-sample-order-db
+    hostname: kinesis-commerce-system-sample-order-db
+    build: kinesis-commerce-system-sample-order-db/
+    ports:
+      - 25432:5432
+    networks:
+      - sandbox
+    environment:
+      POSTGRES_DB: foo_db
+      POSTGRES_USER: foo_user
+      POSTGRES_PASSWORD: something
+      LANG: ja_JP.UTF-8
+
+  # 発注(仕入れ)DB
+  kinesis-commerce-system-sample-purchase-db:
+    image: kinesis-commerce-system-sample-purchase-db:v0.0.1
+    container_name: kinesis-commerce-system-sample-purchase-db
+    hostname: kinesis-commerce-system-sample-purchase-db
+    build: kinesis-commerce-system-sample-purchase-db/
+    ports:
+      - 25433:5432
+    networks:
+      - sandbox
+    environment:
+      POSTGRES_DB: foo_db
+      POSTGRES_USER: foo_user
+      POSTGRES_PASSWORD: something
+      LANG: ja_JP.UTF-8
+
+  # 在庫DB
+  kinesis-commerce-system-sample-inventory-db:
+    image: kinesis-commerce-system-sample-inventory-db:v0.0.1
+    container_name: kinesis-commerce-system-sample-inventory-db
+    hostname: kinesis-commerce-system-sample-inventory-db
+    build: kinesis-commerce-system-sample-inventory-db/
+    ports:
+      - 25434:5432
+    networks:
+      - sandbox
+    environment:
+      POSTGRES_DB: foo_db
+      POSTGRES_USER: foo_user
+      POSTGRES_PASSWORD: something
+      LANG: ja_JP.UTF-8
+
+
+networks:
+  sandbox:
+    driver: bridge

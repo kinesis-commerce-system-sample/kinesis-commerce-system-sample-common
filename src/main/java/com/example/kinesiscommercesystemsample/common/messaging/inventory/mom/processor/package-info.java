@@ -1,0 +1,1 @@
+package com.example.kinesiscommercesystemsample.common.messaging.inventory.mom.processor;

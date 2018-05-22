@@ -1,0 +1,75 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.10.RELEASE'
+		awsSdkVersion = '1.11.239'
+		jdkVersion = 1.8
+		app_basename = 'kinesis-commerce-system-sample-common'
+		app_version = '1.0.0-SNAPSHOT'
+		app_group_id = 'com.example.kinesiscommercesystemsample'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+springBoot {
+	mainClass = ""
+}
+
+archivesBaseName = app_basename
+version = app_version
+group = app_group_id
+
+
+sourceCompatibility = jdkVersion
+targetCompatibility = jdkVersion
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	deployerJars
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.amazonaws:aws-java-sdk-bom:${awsSdkVersion}"
+	}
+}
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+
+	// AWS Kinesis
+	compile("com.amazonaws:aws-java-sdk-kinesis:${awsSdkVersion}")
+	compile("com.amazonaws:amazon-kinesis-client:1.8.8")
+
+	// logging
+	compile("org.springframework.boot:spring-boot-starter-logging:${springBootVersion}")
+	compile("net.logstash.logback:logstash-logback-encoder:4.7")
+
+	// lombok
+	compile("org.projectlombok:lombok:1.16.18")
+
+	// jackson
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+	compile("com.fasterxml.jackson.dataformat:jackson-dataformat-csv")
+
+	// modelmapper
+	compile("org.modelmapper:modelmapper:0.7.5")
+
+	// uuid
+	compile('com.eaio.uuid:uuid:3.2')
+}
